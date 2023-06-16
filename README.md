@@ -17,12 +17,12 @@ When you launch the game, you'll see the text "Press any key to start". It's a p
 ## **Who are the enemies?**<br />
 Big asteroid - small speed, floats in a random direction. When destroyed, splits into several medium asteroids, and you get +20 points.<br />
 Medium asteroid - medium speed, floats in a random direction. When destroyed, splits into several small asteroids, and you get +60 points.<br />
-Small asteroid - high speed, floats in a random direction, and you get +100 points.<br />
+Small asteroid - high speed, floats in a random direction, when destroyed, you get +100 points.<br />
 Small saucer - rotates slowly, moves toward you, tries to reach and touch you. When destroyed, you'll get +200 points.<br />
 Big saucer - rotates slowly, moves toward you, shoots you. When destroyed, you'll get +50 points.<br />
 
 ## **How to create and build this project in Visual Studio?**<br />
-NOTE: I need to have installed Visual Studio 2022, which supports C++20 standard. Google how to do it.
+NOTE: I need to have installed Visual Studio 2022, which supports C++20 standard. Google how to do it.<br />
 
 1. Download this repository as a .zip file and extract it.<br />
 ![2](https://github.com/demianblogan/Game-Until_Last_Asteroid/assets/105989117/97026464-e1ae-4787-820d-d5aeabf59556)
@@ -36,7 +36,7 @@ NOTE: I need to have installed Visual Studio 2022, which supports C++20 standard
 4. To make all those files visible in your project, click the button "Show all files" in Solution Explorer.<br />
 ![4](https://github.com/demianblogan/Game-Until_Last_Asteroid/assets/105989117/21533c25-f96e-4e53-bbb8-40ffdc63f1c3)
 
-5. Select all files, press RMB, and click "Include In Project" (some files in inner folders might not be included, so you can include them individually).<br />
+5. Select all files in Solution Explorer, press RMB, and click "Include In Project" (some files in inner folders might not be included, so you can include them individually).<br />
 ![image](https://github.com/demianblogan/Game-Until_Last_Asteroid/assets/105989117/e99f90ad-0c66-4e97-ba13-0b715ba0a52a)
 
 6. We need to link the SFML library to the project and change the C++ standard to C++20. So go to the project's properties.<br />
@@ -48,7 +48,7 @@ NOTE: I need to have installed Visual Studio 2022, which supports C++20 standard
 8. In "Configuration Properties" go to the tab "General", find "C++ Language Standard" and select "ISO C++20 Standard (/std:c++20".<br />
 ![image](https://github.com/demianblogan/Game-Until_Last_Asteroid/assets/105989117/30d7c9f7-aefa-44aa-b352-f6d993872c4e)
 
-9. SFML library consists of three parts: .h/.cpp files (folder "include"), .lib files (folder "lib"), and .dll files. Let's link the "include" folder first. Go to the "C/C++" tab, find "Additional Include Directories", press the arrow on its right, and click "<Edit...>.<br />
+9. SFML library consists of three parts: .h/.cpp files (folder "include"), .lib files (folder "lib"), and .dll files. Let's link the "include" folder first. Go to the "C/C++" tab, find "Additional Include Directories", press the arrow on its right, and click "<Edit...>".<br />
 ![8](https://github.com/demianblogan/Game-Until_Last_Asteroid/assets/105989117/79cb8d11-aabb-40e5-897f-ddbf3fe087c1)
 
 10. In the new window double-click on the empty line, type "$(ProjectDir)SFML\include", and press "OK" at the bottom of the window.<br />
