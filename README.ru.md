@@ -1,3 +1,7 @@
+[![en](https://img.shields.io/badge/Language-English-red.svg)](https://github.com/demianblogan/Game-Until_Last_Asteroid/blob/main/README.md)
+[![ru](https://img.shields.io/badge/Language-Russian-blue.svg)](https://github.com/demianblogan/Game-Until_Last_Asteroid/blob/main/README.ru.md)
+[![ua](https://img.shields.io/badge/Language-Ukrainian-green.svg)](https://github.com/demianblogan/Game-Until_Last_Asteroid/blob/main/README.ua.md)
+
 # Игра-Until_Last_Asteroid
 Это моя первая игра для моего портфолио. Её жанр "Shoot 'Em Up". В этой игре вы управляете космический корабль и стреляете по противникам, таким как астероиды и другие корабли. У вас есть несколько жизней, вы зарабатываете очки и проходите уровни.
 
