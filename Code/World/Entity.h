@@ -26,7 +26,7 @@ public:
 
 	virtual bool IsAlive() const;
 	virtual bool IsCollideWith(const Entity& other) const = 0;
-	virtual void Update(sf::Time deltaTime) = 0;
+	virtual void Update(float deltaTime) = 0;
 	virtual void OnDestroy();
 
 protected:

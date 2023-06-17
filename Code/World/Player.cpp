@@ -48,10 +48,10 @@ void Player::ProcessEvents()
 
 void Player::Shoot()
 {
-	if (timeSinceLastShoot > sf::seconds(0.2f))
+	if (timeSinceLastShoot > 0.2f)
 	{
 		world.Add(new PlayerShot(*this));
-		timeSinceLastShoot = sf::Time::Zero;
+		timeSinceLastShoot = 0;
 	}
 }
 
@@ -71,16 +71,14 @@ bool Player::IsCollideWith(const Entity& other) const
 	return false;
 }
 
-void Player::Update(sf::Time deltaTime)
+void Player::Update(float deltaTime)
 {
 	timeSinceLastShoot += deltaTime;
-
-	float deltaTime_asSeconds = deltaTime.asSeconds();
 
 	if (rotationOffset != 0)
 	{
 		float rotationSpeed = 300.0f;
-		float angleInDegrees = rotationOffset * rotationSpeed * deltaTime_asSeconds;
+		float angleInDegrees = rotationOffset * rotationSpeed * deltaTime;
 		sprite.rotate(angleInDegrees);
 	}
 
@@ -91,10 +89,10 @@ void Player::Update(sf::Time deltaTime)
 
 		// Convert the angle from polar coordinates to Cartesian coordinates, and
 		// set the result to moveSpeed:
-		moveSpeed += sf::Vector2f(std::cos(angleInRadians), std::sin(angleInRadians)) * 500.0f * deltaTime_asSeconds;
+		moveSpeed += sf::Vector2f(std::cos(angleInRadians), std::sin(angleInRadians)) * 500.0f * deltaTime;
 	}
 
-	sprite.move(moveSpeed * deltaTime_asSeconds);
+	sprite.move(moveSpeed * deltaTime);
 }
 
 void Player::OnDestroy()

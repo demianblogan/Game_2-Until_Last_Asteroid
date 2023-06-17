@@ -9,12 +9,10 @@
 class Meteor : public Enemy
 {
 public:
-	using Enemy::Enemy;
-
 	Meteor(Configuration::Texture textureID, World& world, int pointsPorDstruction);
 
 	virtual bool IsCollideWith(const Entity& other) const override;
-	virtual void Update(sf::Time deltaTime) override;
+	virtual void Update(float deltaTime) override;
 };
 
 class SmallMeteor : public Meteor

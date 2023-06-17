@@ -15,14 +15,13 @@ bool Meteor::IsCollideWith(const Entity& other) const
 	// collide with other meteors:
 	if (dynamic_cast<const Meteor*>(&other) == nullptr)
 		return Collision::CheckCircleCollision(sprite, other.sprite);
-
-	return false;
+	else
+		return false;
 }
 
-void Meteor::Update(sf::Time deltaTime)
+void Meteor::Update(float deltaTime)
 {
-	float deltaTime_AsSeconds = deltaTime.asSeconds();
-	sprite.move(moveSpeed * deltaTime_AsSeconds);
+	sprite.move(moveSpeed * deltaTime);
 }
 
 #pragma endregion
@@ -30,13 +29,10 @@ void Meteor::Update(sf::Time deltaTime)
 #pragma region SmallMeteor class
 
 SmallMeteor::SmallMeteor(World& world)
-	: Meteor(
-		static_cast<Configuration::Texture>(
-			Random::GenerateInt(
-				static_cast<int>(Configuration::Texture::SmallMeteor1),
-				static_cast<int>(Configuration::Texture::SmallMeteor4)
-			)),
-		world, 100)
+	: Meteor((Configuration::Texture)Random::GenerateInt(
+		int(Configuration::Texture::SmallMeteor1),
+		int(Configuration::Texture::SmallMeteor4)
+	), world, 100)
 {
 	moveSpeed *= 300.0f;
 }
@@ -52,13 +48,10 @@ void SmallMeteor::OnDestroy()
 #pragma region MediumMeteor class
 
 MediumMeteor::MediumMeteor(World& world)
-	: Meteor(
-		static_cast<Configuration::Texture>(
-			Random::GenerateInt(
-				static_cast<int>(Configuration::Texture::MediumMeteor1),
-				static_cast<int>(Configuration::Texture::MediumMeteor2)
-			)),
-		world, 60)
+	: Meteor((Configuration::Texture)Random::GenerateInt(
+		int(Configuration::Texture::MediumMeteor1),
+		int(Configuration::Texture::MediumMeteor2)
+	), world, 60)
 {
 	moveSpeed *= 200.0f;
 }
@@ -82,10 +75,10 @@ void MediumMeteor::OnDestroy()
 #pragma region BigMeteor class
 
 BigMeteor::BigMeteor(World& world)
-	: Meteor(
-		(Configuration::Texture)Random::GenerateInt(
-			static_cast<int>(Configuration::Texture::BigMeteor1), static_cast<int>(Configuration::Texture::BigMeteor4))
-		, world, 20)
+	: Meteor((Configuration::Texture)Random::GenerateInt(
+		int(Configuration::Texture::BigMeteor1),
+		int(Configuration::Texture::BigMeteor4)
+	), world, 20)
 {
 	moveSpeed *= 100.0f;
 }

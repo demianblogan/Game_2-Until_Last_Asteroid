@@ -6,14 +6,12 @@
 class Shot : public Entity
 {
 public:
-	using Entity::Entity;
-
 	Shot(Configuration::Texture textureID, World& world);
 
-	virtual void Update(sf::Time deltaTime) override;
+	virtual void Update(float deltaTime) override;
 
 protected:
-	sf::Time duration;
+	float duration = 0;
 };
 
 class PlayerShot : public Shot
@@ -24,12 +22,12 @@ public:
 	virtual bool IsCollideWith(const Entity& other) const override;
 };
 
-class SmallSaucer;
+class SaucerShooter;
 
 class SaucerShot : public Shot
 {
 public:
-	SaucerShot(SmallSaucer& whoShoots);
+	SaucerShot(SaucerShooter& whoShoots);
 
 	virtual bool IsCollideWith(const Entity& other) const override;
 };

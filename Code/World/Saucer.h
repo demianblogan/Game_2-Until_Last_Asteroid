@@ -8,30 +8,28 @@
 class Saucer : public Enemy
 {
 public:
-	using Enemy::Enemy;
-
 	Saucer(Configuration::Texture textureID, World& world, int pointsPorDstruction);
 
 	virtual bool IsCollideWith(const Entity& other) const override;
-	virtual void Update(sf::Time deltaTime) override;
+	virtual void Update(float deltaTime) override;
 	virtual void OnDestroy() override;
 
 	static void CreateNewSaucer(World& world);
 };
 
-class BigSaucer : public Saucer
+class SaucerKamikaze : public Saucer
 {
 public:
-	BigSaucer(World& world);
+	SaucerKamikaze(World& world);
 };
 
-class SmallSaucer : public Saucer
+class SaucerShooter : public Saucer
 {
 private:
-	sf::Time timeSinceLastShoot;
+	float timeSinceLastShoot;
 
 public:
-	SmallSaucer(World& world);
+	SaucerShooter(World& world);
 
-	virtual void Update(sf::Time deltaTime) override;
+	virtual void Update(float deltaTime) override;
 };

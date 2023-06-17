@@ -7,35 +7,35 @@
 // Class TargetForActions is a manager that links "Action" objects to specific
 // functions that should been invoked when these actions are triggered.
 // That's why this class process all action events.
-template <typename KeyType>
+template <typename ActionID>
 class TargetForActions
 {
 public:
 	using FuncType = std::function<void(const sf::Event&)>;
 
 	TargetForActions() = default;
-	TargetForActions(const ActionMap<KeyType>& map);
+	TargetForActions(const ActionMap<ActionID>& map);
 
 	bool ProcessNotRealTimeEvent(const sf::Event& event) const;
 	void ProcessRealTimeEvents() const;
 
-	void Bind(const KeyType& action, const FuncType& callback);
-	void Unbind(const KeyType& action);
+	void Bind(const ActionID& action, const FuncType& callback);
+	void Unbind(const ActionID& action);
 
 private:
-	std::list<std::pair<KeyType, FuncType>> realTimeEvents;    // events that should been processed first
-	std::list<std::pair<KeyType, FuncType>> notRealTimeEvents; // events that should been processed second
+	std::list<std::pair<ActionID, FuncType>> realTimeEvents;    // events that should been processed first
+	std::list<std::pair<ActionID, FuncType>> notRealTimeEvents; // events that should been processed second
 
-	const ActionMap<KeyType>& actionMap;
+	const ActionMap<ActionID>& actionMap;
 };
 
-template <typename KeyType>
-TargetForActions<KeyType>::TargetForActions(const ActionMap<KeyType>& map)
+template <typename ActionID>
+TargetForActions<ActionID>::TargetForActions(const ActionMap<ActionID>& map)
 	: actionMap(map)
 { }
 
-template <typename KeyType>
-bool TargetForActions<KeyType>::ProcessNotRealTimeEvent(const sf::Event& event) const
+template <typename ActionID>
+bool TargetForActions<ActionID>::ProcessNotRealTimeEvent(const sf::Event& event) const
 {
 	for (auto& [key, function] : notRealTimeEvents)
 	{
@@ -49,8 +49,8 @@ bool TargetForActions<KeyType>::ProcessNotRealTimeEvent(const sf::Event& event) 
 	return false;
 }
 
-template <typename KeyType>
-void TargetForActions<KeyType>::ProcessRealTimeEvents() const
+template <typename ActionID>
+void TargetForActions<ActionID>::ProcessRealTimeEvents() const
 {
 	for (auto& [key, function] : realTimeEvents)
 	{
@@ -60,8 +60,8 @@ void TargetForActions<KeyType>::ProcessRealTimeEvents() const
 	}
 }
 
-template <typename KeyType>
-void TargetForActions<KeyType>::Bind(const KeyType& key, const FuncType& callback)
+template <typename ActionID>
+void TargetForActions<ActionID>::Bind(const ActionID& key, const FuncType& callback)
 {
 	const Action& action = actionMap.Get(key);
 
@@ -71,10 +71,10 @@ void TargetForActions<KeyType>::Bind(const KeyType& key, const FuncType& callbac
 		notRealTimeEvents.emplace_back(key, callback);
 }
 
-template <typename KeyType>
-void TargetForActions<KeyType>::Unbind(const KeyType& key)
+template <typename ActionID>
+void TargetForActions<ActionID>::Unbind(const ActionID& key)
 {
-	auto removeFunction = [&key](const std::pair<KeyType, FuncType>& pair)
+	auto removeFunction = [&key](const std::pair<ActionID, FuncType>& pair)
 	{
 		return pair.first == key;
 	};

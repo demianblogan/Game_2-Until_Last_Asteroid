@@ -11,7 +11,7 @@ World::~World()
 	Clear();
 }
 
-void World::Update(sf::Time deltaTime)
+void World::Update(float deltaTime)
 {
 	if (temporaryEntities.size() > 0)
 		entities.splice(entities.end(), temporaryEntities);
@@ -97,18 +97,12 @@ void World::CheckEntityOutOfBounds(Entity& entity) const
 	// the other side of it:
 	sf::Vector2f position = entity.GetPosition();
 	if (position.x < 0)
-	{
-		position.x = static_cast<float>(width);
-		position.y = height - position.y;
-	}
+		position.x = float(width);
 	else if (position.x > width)
-	{
 		position.x = 0;
-		position.y = height - position.y;
-	}
 
 	if (position.y < 0)
-		position.y = static_cast<float>(height);
+		position.y = float(height);
 	else if (position.y > height)
 		position.y = 0;
 

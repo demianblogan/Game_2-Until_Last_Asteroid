@@ -29,11 +29,12 @@ void Game::ProcessEvents()
 		Configuration::player->ProcessEvents();
 }
 
-void Game::Update(sf::Time deltaTime)
+void Game::Update(float deltaTime)
 {
 	if (!Configuration::IsGameOver())
 	{
 		world.Update(deltaTime);
+
 		if (Configuration::player == nullptr)
 		{
 			Configuration::player = new Player(world);
@@ -42,10 +43,10 @@ void Game::Update(sf::Time deltaTime)
 		}
 
 		timeUntilNextEnemySaucerAppears -= deltaTime;
-		if (timeUntilNextEnemySaucerAppears < sf::Time::Zero)
+		if (timeUntilNextEnemySaucerAppears < 0)
 		{
 			Saucer::CreateNewSaucer(world);
-			timeUntilNextEnemySaucerAppears = sf::seconds(Random::GenerateFloat(10.0f, 60.0f - Configuration::currentLevel * 2));
+			timeUntilNextEnemySaucerAppears = Random::GenerateFloat(10.0f, 60.0f - Configuration::currentLevel * 2);
 		}
 
 		// If there only player ship is left
@@ -76,7 +77,7 @@ void Game::Render()
 
 void Game::Reset()
 {
-	timeUntilNextEnemySaucerAppears = sf::seconds(Random::GenerateFloat(5.0f, 6.0f - Configuration::currentLevel * 2));
+	timeUntilNextEnemySaucerAppears = Random::GenerateFloat(5.0f, 6.0f - Configuration::currentLevel * 2);
 
 	world.Clear();
 	Configuration::player = nullptr;
@@ -117,8 +118,8 @@ void Game::InitializeLevel()
 		do
 		{
 			meteorPtr->SetPosition(
-				Random::GenerateFloat(0.0f, static_cast<float>(world.GetWidth())),
-				Random::GenerateFloat(0.0f, static_cast<float>(world.GetHeight()))
+				Random::GenerateFloat(0.0f, float(world.GetWidth())),
+				Random::GenerateFloat(0.0f, float(world.GetHeight()))
 			);
 
 		} while (world.IsEntityCollideWithOthers(*meteorPtr));
@@ -143,24 +144,12 @@ Game::Game()
 
 void Game::Run()
 {
-	const int MINIMUM_FRAMES_PER_SECOND = 60;
-
-	sf::Clock clock;
-	sf::Time timeSinceLastUpdate;
-	sf::Time timePerFrame = sf::seconds(1.0f / MINIMUM_FRAMES_PER_SECOND);
+	sf::Clock deltaTime;
 
 	while (window.isOpen())
 	{
 		ProcessEvents();
-
-		timeSinceLastUpdate = clock.restart();
-		while (timeSinceLastUpdate > timePerFrame)
-		{
-			timeSinceLastUpdate -= timePerFrame;
-			Update(timePerFrame);
-		}
-
-		Update(timeSinceLastUpdate);
+		Update(deltaTime.restart().asSeconds());
 		Render();
 	}
 }

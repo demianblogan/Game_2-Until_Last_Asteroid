@@ -6,5 +6,5 @@ class Math
 {
 public:
 	Math() = delete;
-	static constexpr float PI = static_cast<float>(std::numbers::pi);
+	static constexpr float PI = float(std::numbers::pi);
 };

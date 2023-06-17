@@ -23,10 +23,8 @@ bool Saucer::IsCollideWith(const Entity& other) const
 	return false;
 }
 
-void Saucer::Update(sf::Time deltaTime)
+void Saucer::Update(float deltaTime)
 {
-	float deltaTime_asSeconds = deltaTime.asSeconds();
-
 	// Find the nearest entity:
 	Entity* neareastEntity = nullptr;
 	float nearestDistance = 300.0f;
@@ -59,7 +57,7 @@ void Saucer::Update(sf::Time deltaTime)
 
 		// Convert the angle from polar coordinates to Cartesian coordinates, and
 		// set the result to moveSpeed:
-		moveSpeed -= sf::Vector2f(std::cos(angleInRadians), std::sin(angleInRadians)) * 300.0f * deltaTime_asSeconds;
+		moveSpeed -= sf::Vector2f(std::cos(angleInRadians), std::sin(angleInRadians)) * 300.0f * deltaTime;
 	}
 	else // it's the player
 	{
@@ -71,25 +69,25 @@ void Saucer::Update(sf::Time deltaTime)
 
 		// Convert the angle from polar coordinates to Cartesian coordinates, and
 		// set the result to moveSpeed:
-		moveSpeed += sf::Vector2f(std::cos(angleInRadians), std::sin(angleInRadians)) * 100.0f * deltaTime_asSeconds;
+		moveSpeed += sf::Vector2f(std::cos(angleInRadians), std::sin(angleInRadians)) * 100.0f * deltaTime;
 	}
 
-	sprite.move(moveSpeed * deltaTime_asSeconds);
+	sprite.move(moveSpeed * deltaTime);
 }
 
 void Saucer::OnDestroy()
 {
 	Enemy::OnDestroy();
-	world.Add(Configuration::Sound::Boom2);
+	world.Add(Configuration::Sound::EnemySaucerExplosion);
 }
 
 void Saucer::CreateNewSaucer(World& world)
 {
 	Saucer* newSoucer = nullptr;
 	if (Random::GenerateFloat(0.0f, 1.0f) > Configuration::GetScore() / 40'000.0f)
-		newSoucer = new BigSaucer(world);
+		newSoucer = new SaucerKamikaze(world);
 	else
-		newSoucer = new SmallSaucer(world);
+		newSoucer = new SaucerShooter(world);
 
 	// New saucer will appear on the top.
 	newSoucer->SetPosition(
@@ -102,39 +100,39 @@ void Saucer::CreateNewSaucer(World& world)
 
 #pragma endregion
 
-#pragma region class BigSaucer
+#pragma region class SaucerKamikaze
 
-BigSaucer::BigSaucer(World& world)
+SaucerKamikaze::SaucerKamikaze(World& world)
 	: Saucer(Configuration::Texture::BigEnemySaucer, world, 50)
 {
-	world.Add(Configuration::Sound::SaucerSpawn1);
+	world.Add(Configuration::Sound::SaucerKamikazeSpawn);
 	moveSpeed *= 300.0f;
 }
 
 #pragma endregion
 
-#pragma region class SmallSaucer
+#pragma region class SaucerShooter
 
-SmallSaucer::SmallSaucer(World& world)
+SaucerShooter::SaucerShooter(World& world)
 	: Saucer(Configuration::Texture::SmallEnemySaucer, world, 200)
 {
-	timeSinceLastShoot = sf::Time::Zero;
-	world.Add(Configuration::Sound::SaucerSpawn2);
-	moveSpeed * 400.0f;
+	timeSinceLastShoot = 0;
+	world.Add(Configuration::Sound::SaucerShooterSpawn);
+	moveSpeed *= 400.0f;
 }
 
-void SmallSaucer::Update(sf::Time deltaTime)
+void SaucerShooter::Update(float deltaTime)
 {
 	Saucer::Update(deltaTime);
 
 	// Every 1.5 second make a shot on the player:
 	timeSinceLastShoot += deltaTime;
-	if (timeSinceLastShoot > sf::seconds(1.5))
+	if (timeSinceLastShoot > 1.5f)
 	{
 		if (Configuration::player != nullptr)
 			world.Add(new SaucerShot(*this));
 
-		timeSinceLastShoot = sf::Time::Zero;
+		timeSinceLastShoot = 0;
 	}
 }
 

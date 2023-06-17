@@ -19,12 +19,12 @@ private:
 
 	World world;
 
-	sf::Time timeUntilNextEnemySaucerAppears = sf::Time::Zero;
+	float timeUntilNextEnemySaucerAppears = 0;
 	sf::Text textPromptForUser;
 	static constexpr int TEXT_RROMPT_FOR_USER_FONT_SIZE = 70;
 
 	void ProcessEvents();
-	void Update(sf::Time deltaTime);
+	void Update(float deltaTime);
 	void Render();
 	void Reset();
 	void InitializeLevel();

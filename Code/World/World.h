@@ -12,7 +12,7 @@ public:
 
 	~World();
 
-	void Update(sf::Time deltaTime);
+	void Update(float deltaTime);
 
 	void Add(Entity* entity);
 	void Add(Configuration::Sound soundId);

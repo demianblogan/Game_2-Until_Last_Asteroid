@@ -56,9 +56,9 @@ bool Configuration::IsGameOver()
 
 void Configuration::AddScore(int points)
 {
-	// Every next level and new multiplier to added points. For example
+	// Every next level add new multiplier to added points. For example
 	// if you add 500 points on 1st level, then its multiplier is 1.
-	// If it's 2nd level, multiplier is 2.
+	// If it's 2nd level, multiplier is 2, and you'll get 1000 points.
 
 	// Also every time player has earned new POINTS_NEEDED_FOR_EXTRA_LIFE points
 	// he gets +1 life.
@@ -122,15 +122,15 @@ void Configuration::InitializeSounds()
 {
 	// Load sounds for shots:
 	sounds.Load(Sound::PlayerLaserShot, "Assets/Sounds/PlayerLaserShot.ogg");
-	sounds.Load(Sound::EmenyLaserShot, "Assets/Sounds/EmenyLaserShot.ogg");
+	sounds.Load(Sound::EnemyLaserShot, "Assets/Sounds/EnemyLaserShot.ogg");
 
 	// Load sounds for enemies spawn:
-	sounds.Load(Sound::SaucerSpawn1, "Assets/Sounds/SaucerSpawn1.flac");
-	sounds.Load(Sound::SaucerSpawn2, "Assets/Sounds/SaucerSpawn2.flac");
+	sounds.Load(Sound::SaucerKamikazeSpawn, "Assets/Sounds/SaucerKamikazeSpawn.flac");
+	sounds.Load(Sound::SaucerShooterSpawn, "Assets/Sounds/SaucerShooterSpawn.flac");
 
 	// Load sounds for booms:
 	sounds.Load(Sound::PlayerShipExplosion, "Assets/Sounds/PlayerShipExplosion.flac");
-	sounds.Load(Sound::Boom2, "Assets/Sounds/Boom2.flac");
+	sounds.Load(Sound::EnemySaucerExplosion, "Assets/Sounds/EnemySaucerExplosion.flac");
 
 	// Load sounds for explosions:
 	sounds.Load(Sound::BigMeteorExplosion, "Assets/Sounds/BigMeteorExplosion.flac");

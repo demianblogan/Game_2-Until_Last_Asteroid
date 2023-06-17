@@ -46,13 +46,13 @@ public:
 	enum class Sound
 	{
 		PlayerLaserShot,
-		EmenyLaserShot,
+		EnemyLaserShot,
 
-		SaucerSpawn1,
-		SaucerSpawn2,
+		SaucerKamikazeSpawn,
+		SaucerShooterSpawn,
 
 		PlayerShipExplosion,
-		Boom2,
+		EnemySaucerExplosion,
 
 		SmallMeteorExplosion,
 		MediumMeteorExplosion,
@@ -99,7 +99,7 @@ private:
 	static int score;
 	static sf::Text textScore;
 	static constexpr int SCORE_FONT_SIZE = 50;
-	static constexpr int POINTS_NEEDED_FOR_EXTRA_LIFE = 1'000;
+	static constexpr int POINTS_NEEDED_FOR_EXTRA_LIFE = 10'000;
 
 	static sf::Sprite spriteLife;
 	static const sf::Vector2f SPRITE_LIFE_POSITION;

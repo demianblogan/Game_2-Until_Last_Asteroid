@@ -11,7 +11,7 @@ class Player : public Entity, public TargetForActions<Configuration::PlayerActio
 private:
 	bool isMoving;
 	int rotationOffset;
-	sf::Time timeSinceLastShoot;
+	float timeSinceLastShoot;
 
 public:
 	Player(World& world);
@@ -21,6 +21,6 @@ public:
 	void JumpToHyperspace();
 
 	virtual bool IsCollideWith(const Entity& other) const override;
-	virtual void Update(sf::Time deltaTime);
+	virtual void Update(float deltaTime);
 	virtual void OnDestroy() override;
 };
