@@ -2,7 +2,7 @@
 [![ru](https://img.shields.io/badge/Language-Russian-blue.svg)](https://github.com/demianblogan/Game-Until_Last_Asteroid/blob/main/README.ru.md)
 [![ua](https://img.shields.io/badge/Language-Ukrainian-green.svg)](https://github.com/demianblogan/Game-Until_Last_Asteroid/blob/main/README.ua.md)
 
-# Game-Until_Last_Asteroid
+# Brief description of the game
 This is my first game for my portfolio. Its genre is "Shoot 'Em Up". In this game, you control a spaceship and shoot at enemies, including asteroids and other ships. You have multiple lives, earn points, and complete levels.
 
 ![1](https://github.com/demianblogan/Game-Until_Last_Asteroid/assets/105989117/3b0eb5bc-6564-49be-a4cb-a588289da779)
@@ -22,8 +22,8 @@ When you launch the game, you'll see the text "Press any key to start". It's a p
 1. Big asteroid - small speed, floats in a random direction. When destroyed, splits into several medium asteroids, and you get +20 points.<br />
 2. Medium asteroid - medium speed, floats in a random direction. When destroyed, splits into several small asteroids, and you get +60 points.<br />
 3. Small asteroid -  high speed, floats in a random direction, and you get +100 points.<br />
-4. Small saucer - rotates slowly, moves toward you, tries to reach and touch you. When destroyed, you'll get +200 points.<br />
-5. Big saucer - rotates slowly, moves toward you, shoots you. When destroyed, you'll get +50 points.<br />
+4. Saucer kamikaze - moves quickly towards you. When destroyed, you'll get +200 points.<br />
+5. Big saucer -  moves quickly towards you, shoots you. When destroyed, you'll get +50 points.<br />
 
 ## **How to create and build this project in Visual Studio?**<br />
 NOTE: I need to have installed Visual Studio 2022, which supports C++20 standard. Google how to do it.<br />
