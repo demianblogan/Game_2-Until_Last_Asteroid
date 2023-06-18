@@ -11,20 +11,22 @@
 
 #pragma region class Shot
 
-Shot::Shot(Configuration::Texture textureID, World& world)
+Shot::Shot(Configuration::Texture textureID, World& world, float moveSpeed)
 	: Entity(textureID, world)
 {
+	this->moveSpeed = moveSpeed;
+
 	// Random angle from 0 to 360 degrees (in radiands):
 	float angleInRadians = Random::GenerateFloat(0.0f, 2.0f * Math::PI);
 
 	// Convert the angle from polar coordinates to Cartesian coordinates, and
-	// set the result to moveSpeed:
-	moveSpeed = sf::Vector2f(std::cos(angleInRadians), std::sin(angleInRadians));
+	// set the result to moveDirection:
+	moveDirection = sf::Vector2f(std::cos(angleInRadians), std::sin(angleInRadians));
 }
 
 void Shot::Update(float deltaTime)
 {
-	sprite.move(moveSpeed * deltaTime);
+	sprite.move(moveDirection * moveSpeed * deltaTime);
 
 	duration -= deltaTime;
 	if (duration < 0)
@@ -36,7 +38,7 @@ void Shot::Update(float deltaTime)
 #pragma region class PlayerShot
 
 PlayerShot::PlayerShot(Player& whoShoots)
-	: Shot(Configuration::Texture::PlayerShot, whoShoots.world)
+	: Shot(Configuration::Texture::PlayerShot, whoShoots.world, 1000.0f)
 {
 	duration = 5.0f;
 
@@ -44,8 +46,8 @@ PlayerShot::PlayerShot(Player& whoShoots)
 	float angleInRadians = whoShoots.sprite.getRotation() / 180 * Math::PI - Math::PI / 2;
 
 	// Convert the angle from polar coordinates to Cartesian coordinates, and
-	// set the result to moveSpeed:
-	moveSpeed = sf::Vector2f(std::cos(angleInRadians), std::sin(angleInRadians)) * 1000.0f;
+	// set the result to moveDirection:
+	moveDirection = sf::Vector2f(std::cos(angleInRadians), std::sin(angleInRadians));
 
 	SetPosition(whoShoots.GetPosition());
 	sprite.setRotation(whoShoots.sprite.getRotation());
@@ -66,7 +68,7 @@ bool PlayerShot::IsCollideWith(const Entity& other) const
 #pragma region SaucerShot
 
 SaucerShot::SaucerShot(SaucerShooter& saucer)
-	: Shot(Configuration::Texture::EnemySaucerShot, saucer.GetWorld())
+	: Shot(Configuration::Texture::EnemySaucerShot, saucer.GetWorld(), 750.0f)
 {
 	duration = 5.0f;
 
@@ -81,8 +83,8 @@ SaucerShot::SaucerShot(SaucerShooter& saucer)
 	float angleInDegrees = angleInRadians * 180 / Math::PI;
 
 	// Convert the angle from polar coordinates to Cartesian coordinates, and
-	// set the result to moveSpeed:
-	moveSpeed = sf::Vector2f(std::cos(angleInRadians), std::sin(angleInRadians)) * 500.0f;
+	// set the result to moveDirection:
+	moveDirection = sf::Vector2f(std::cos(angleInRadians), std::sin(angleInRadians));
 
 	SetPosition(saucer.GetPosition());
 	sprite.setRotation(angleInDegrees + 90.0f);

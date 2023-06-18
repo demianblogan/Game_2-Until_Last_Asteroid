@@ -9,7 +9,7 @@ public:
 	enum class Type
 	{
 		RealTime = 1,
-		Pressed  = 1 << 1,
+		Pressed = 1 << 1,
 		Released = 1 << 2,
 		RealTime_Pressed = RealTime | Pressed
 	};
@@ -18,6 +18,8 @@ public:
 	Action(const sf::Mouse::Button& button, Type type = Type::RealTime_Pressed);
 
 	bool IsTriggeredByPress() const;
+	const sf::Event& GetEvent() const;
+	Type GetType() const;
 
 	bool operator==(const sf::Event& event) const;
 	bool operator==(const Action& other) const;
@@ -25,6 +27,7 @@ public:
 private:
 	sf::Event event;
 	Type type;
-
-	template<typename> friend class TargetForActions;
 };
+
+inline int operator|(Action::Type a, Action::Type b);
+inline int operator&(Action::Type a, Action::Type b);

@@ -9,9 +9,9 @@
 class Player : public Entity, public TargetForActions<Configuration::PlayerAction>
 {
 private:
-	bool isMoving;
-	int rotationOffset;
-	float timeSinceLastShoot;
+	bool isMoving = false;
+	int rotationOffset = 0;
+	float timeSinceLastShoot = 0;
 
 public:
 	Player(World& world);

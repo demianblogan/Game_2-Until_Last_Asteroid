@@ -9,15 +9,16 @@
 
 #pragma region class Saucer
 
-Saucer::Saucer(Configuration::Texture textureID, World& world, int pointsPorDstruction)
+Saucer::Saucer(Configuration::Texture textureID, World& world, int pointsPorDstruction, float moveSpeed)
 	: Enemy(textureID, world, pointsPorDstruction)
-{ }
+{
+	this->moveSpeed = moveSpeed;
+}
 
 bool Saucer::IsCollideWith(const Entity& other) const
 {
-	// Saucers can't collide with their bullets. So we just check if they
-	// collide with other entities:
-	if (dynamic_cast<const SaucerShot*>(&other) == nullptr)
+	// Saucers can collide only with player and his shots.
+	if (dynamic_cast<const Player*>(&other) != nullptr || dynamic_cast<const PlayerShot*>(&other) != nullptr)
 		return Collision::CheckCircleCollision(sprite, other.sprite);
 
 	return false;
@@ -25,54 +26,17 @@ bool Saucer::IsCollideWith(const Entity& other) const
 
 void Saucer::Update(float deltaTime)
 {
-	// Find the nearest entity:
-	Entity* neareastEntity = nullptr;
-	float nearestDistance = 300.0f;
+	sf::Vector2f disntaceToPlayer = Configuration::player->GetPosition() - GetPosition();
 
-	for (Entity* entityPtr : world.GetEntities())
-	{
-		if (entityPtr != this &&
-			(dynamic_cast<const Meteor*>(entityPtr) != nullptr || dynamic_cast<const PlayerShot*>(entityPtr) != nullptr))
-		{
-			float horizontalDistance = GetPosition().x - entityPtr->GetPosition().x;
-			float verticalDistance = GetPosition().y - entityPtr->GetPosition().y;
+	// Calculate the angle between the positive x-axis and the vector that points
+	// from the current position to player's. (range [-pi...pi] or [-180, 180]):
+	float angleInRadians = std::atan2(disntaceToPlayer.y, disntaceToPlayer.x);
 
-			float distance = std::sqrt(horizontalDistance * horizontalDistance + verticalDistance * verticalDistance);
+	// Convert the angle from polar coordinates to Cartesian coordinates, and
+	// set the result to moveDirection:
+	moveDirection = sf::Vector2f(std::cos(angleInRadians), std::sin(angleInRadians));
 
-			if (distance < nearestDistance)
-			{
-				nearestDistance = distance;
-				neareastEntity = entityPtr;
-			}
-		}
-	}
-
-	if (neareastEntity != nullptr)
-	{
-		sf::Vector2f disntaceToEntity = neareastEntity->GetPosition() - GetPosition();
-
-		// Calculate the angle between the positive x-axis and the vector that points
-		// from the current position to neareastEntity. (range [-pi...pi] or [-180, 180]):
-		float angleInRadians = std::atan2(disntaceToEntity.y, disntaceToEntity.x);
-
-		// Convert the angle from polar coordinates to Cartesian coordinates, and
-		// set the result to moveSpeed:
-		moveSpeed -= sf::Vector2f(std::cos(angleInRadians), std::sin(angleInRadians)) * 300.0f * deltaTime;
-	}
-	else // it's the player
-	{
-		sf::Vector2f disntaceToPlayer = Configuration::player->GetPosition() - GetPosition();
-
-		// Calculate the angle between the positive x-axis and the vector that points
-		// from the current position to disntaceToPlayer. (range [-pi...pi] or [-180, 180]):
-		float angleInRadians = std::atan2(disntaceToPlayer.y, disntaceToPlayer.x);
-
-		// Convert the angle from polar coordinates to Cartesian coordinates, and
-		// set the result to moveSpeed:
-		moveSpeed += sf::Vector2f(std::cos(angleInRadians), std::sin(angleInRadians)) * 100.0f * deltaTime;
-	}
-
-	sprite.move(moveSpeed * deltaTime);
+	sprite.move(moveDirection * moveSpeed * deltaTime);
 }
 
 void Saucer::OnDestroy()
@@ -103,10 +67,9 @@ void Saucer::CreateNewSaucer(World& world)
 #pragma region class SaucerKamikaze
 
 SaucerKamikaze::SaucerKamikaze(World& world)
-	: Saucer(Configuration::Texture::BigEnemySaucer, world, 50)
+	: Saucer(Configuration::Texture::BigEnemySaucer, world, 50, 700.0f)
 {
 	world.Add(Configuration::Sound::SaucerKamikazeSpawn);
-	moveSpeed *= 300.0f;
 }
 
 #pragma endregion
@@ -114,11 +77,10 @@ SaucerKamikaze::SaucerKamikaze(World& world)
 #pragma region class SaucerShooter
 
 SaucerShooter::SaucerShooter(World& world)
-	: Saucer(Configuration::Texture::SmallEnemySaucer, world, 200)
+	: Saucer(Configuration::Texture::SmallEnemySaucer, world, 200, 400.0f)
 {
 	timeSinceLastShoot = 0;
 	world.Add(Configuration::Sound::SaucerShooterSpawn);
-	moveSpeed *= 400.0f;
 }
 
 void SaucerShooter::Update(float deltaTime)

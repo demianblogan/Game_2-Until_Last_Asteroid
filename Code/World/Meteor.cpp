@@ -21,7 +21,7 @@ bool Meteor::IsCollideWith(const Entity& other) const
 
 void Meteor::Update(float deltaTime)
 {
-	sprite.move(moveSpeed * deltaTime);
+	sprite.move(moveDirection * moveSpeed * deltaTime);
 }
 
 #pragma endregion
@@ -34,7 +34,7 @@ SmallMeteor::SmallMeteor(World& world)
 		int(Configuration::Texture::SmallMeteor4)
 	), world, 100)
 {
-	moveSpeed *= 300.0f;
+	moveSpeed = 300.0f;
 }
 
 void SmallMeteor::OnDestroy()
@@ -53,7 +53,7 @@ MediumMeteor::MediumMeteor(World& world)
 		int(Configuration::Texture::MediumMeteor2)
 	), world, 60)
 {
-	moveSpeed *= 200.0f;
+	moveSpeed = 200.0f;
 }
 
 void MediumMeteor::OnDestroy()
@@ -80,7 +80,7 @@ BigMeteor::BigMeteor(World& world)
 		int(Configuration::Texture::BigMeteor4)
 	), world, 20)
 {
-	moveSpeed *= 100.0f;
+	moveSpeed = 100.0f;
 }
 
 void BigMeteor::OnDestroy()

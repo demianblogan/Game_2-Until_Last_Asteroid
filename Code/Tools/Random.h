@@ -1,7 +1,7 @@
 #pragma once
 #include <random>
 
-// Class Random is a tool for getting random integer and floating numbers.
+// Class Random is a utility class for generating random numbers (integer, float, double).
 class Random
 {
 public:

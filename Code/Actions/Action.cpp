@@ -24,27 +24,37 @@ bool Action::IsTriggeredByPress() const
 		return false;
 }
 
+ const sf::Event& Action::GetEvent() const
+{
+	return event;
+}
+
+Action::Type Action::GetType() const
+{
+	return type;
+}
+
 bool Action::operator==(const sf::Event& other) const
 {
 	switch (other.type)
 	{
 	case sf::Event::KeyPressed:
-		if (static_cast<int>(type) & static_cast<int>(Type::Pressed) && event.type == sf::Event::KeyPressed)
+		if (type & Type::Pressed && event.type == sf::Event::KeyPressed)
 			return event.key.code == other.key.code;
 		break;
 
 	case sf::Event::KeyReleased:
-		if (static_cast<int>(type) & static_cast<int>(Type::Released) && event.type == sf::Event::KeyPressed)
+		if (type & Type::Released && event.type == sf::Event::KeyPressed)
 			return event.key.code == other.key.code;
 		break;
 
 	case sf::Event::MouseButtonPressed:
-		if (static_cast<int>(type) & static_cast<int>(Type::Pressed) && event.type == sf::Event::MouseButtonPressed)
+		if (type & Type::Pressed && event.type == sf::Event::MouseButtonPressed)
 			return event.mouseButton.button == other.mouseButton.button;
 		break;
 
 	case sf::Event::MouseButtonReleased:
-		if (static_cast<int>(type) & static_cast<int>(Type::Released) && event.type == sf::Event::MouseButtonPressed)
+		if (type & Type::Released && event.type == sf::Event::MouseButtonPressed)
 			return event.mouseButton.button == other.mouseButton.button;
 		break;
 	}
@@ -54,5 +64,15 @@ bool Action::operator==(const sf::Event& other) const
 
 bool Action::operator==(const Action& other) const
 {
-	return type == other.type && other == event;
+	return type == other.type && event == other;
+}
+
+inline int operator|(Action::Type a, Action::Type b)
+{
+	return int(a) | int(b);
+}
+
+inline int operator&(Action::Type a, Action::Type b)
+{
+	return int(a) & int(b);
 }

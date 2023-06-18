@@ -8,7 +8,7 @@
 class Saucer : public Enemy
 {
 public:
-	Saucer(Configuration::Texture textureID, World& world, int pointsPorDstruction);
+	Saucer(Configuration::Texture textureID, World& world, int pointsPorDstruction, float moveSpeed);
 
 	virtual bool IsCollideWith(const Entity& other) const override;
 	virtual void Update(float deltaTime) override;

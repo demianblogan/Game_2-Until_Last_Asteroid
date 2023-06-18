@@ -6,7 +6,7 @@
 class Shot : public Entity
 {
 public:
-	Shot(Configuration::Texture textureID, World& world);
+	Shot(Configuration::Texture textureID, World& world, float moveSpeed);
 
 	virtual void Update(float deltaTime) override;
 

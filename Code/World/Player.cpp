@@ -10,9 +10,9 @@
 Player::Player(World& world)
 	: Entity(Configuration::Texture::PlayerShip, world)
 	, TargetForActions(Configuration::playerActions)
-	, isMoving(false)
-	, rotationOffset(0)
 {
+	moveSpeed = 500.0f;
+
 	Bind(
 		Configuration::PlayerAction::Up,
 		[this](const sf::Event&) { isMoving = true; }
@@ -57,7 +57,7 @@ void Player::Shoot()
 
 void Player::JumpToHyperspace()
 {
-	moveSpeed = sf::Vector2f(0, 0);
+	moveDirection = sf::Vector2f(0, 0);
 	SetPosition(Random::GenerateInt(0, world.GetWidth()), Random::GenerateInt(0, world.GetHeight()));
 	world.Add(Configuration::Sound::HyperJump);
 }
@@ -89,10 +89,10 @@ void Player::Update(float deltaTime)
 
 		// Convert the angle from polar coordinates to Cartesian coordinates, and
 		// set the result to moveSpeed:
-		moveSpeed += sf::Vector2f(std::cos(angleInRadians), std::sin(angleInRadians)) * 500.0f * deltaTime;
+		moveDirection += sf::Vector2f(std::cos(angleInRadians), std::sin(angleInRadians)) * moveSpeed * deltaTime;
 	}
 
-	sprite.move(moveSpeed * deltaTime);
+	sprite.move(moveDirection * deltaTime);
 }
 
 void Player::OnDestroy()

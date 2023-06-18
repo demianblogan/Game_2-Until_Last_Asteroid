@@ -4,8 +4,9 @@
 
 class World;
 
-// class Entity is a base class of all entities hierarchy in the game world, and contains
-// same properties for all entites (drawing possibily, sprite, etc.).
+// The Entity class is the base class for all entities within the game world.
+// It provides common properties and behaviours such as being drawable, 
+// having a sprite, a position, and an alive status.
 class Entity : public sf::Drawable
 {
 public:
@@ -37,7 +38,8 @@ protected:
 	friend class EnemyShot;
 
 	sf::Sprite sprite;
-	sf::Vector2f moveSpeed; // This field is a direction of the entity + its moving speed
+	sf::Vector2f moveDirection;
+	float moveSpeed = 0;
 	World& world;
 	bool isAlive;
 

@@ -15,7 +15,7 @@ public:
 	{
 		auto ptr = std::make_unique<Resource>();
 		if (!ptr->loadFromFile(std::forward<Args>(args)...))
-			throw std::runtime_error("Impossible to load file");
+			throw std::runtime_error("Failed to load file");
 
 		resourceMap.emplace(id, std::move(ptr));
 	}
@@ -40,7 +40,7 @@ public:
 	{
 		auto ptr = std::make_unique<sf::Music>();
 		if (!ptr->openFromFile(std::forward<Args>(args)...))
-			throw std::runtime_error("Impossible to open file");
+			throw std::runtime_error("Failed to open music file");
 
 		musicMap.emplace(id, std::move(ptr));
 	}

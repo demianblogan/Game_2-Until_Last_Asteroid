@@ -1,7 +1,7 @@
 #pragma once
 #include <numbers>
 
-// Class Math contains any math constants and math algorithms.
+// Class Math contains mathematical constants and algorithms.
 class Math
 {
 public:

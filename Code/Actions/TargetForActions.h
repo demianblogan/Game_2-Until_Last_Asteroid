@@ -56,7 +56,7 @@ void TargetForActions<ActionID>::ProcessRealTimeEvents() const
 	{
 		const Action& action = actionMap.Get(key);
 		if (action.IsTriggeredByPress())
-			function(action.event);
+			function(action.GetEvent());
 	}
 }
 
@@ -65,7 +65,7 @@ void TargetForActions<ActionID>::Bind(const ActionID& key, const FuncType& callb
 {
 	const Action& action = actionMap.Get(key);
 
-	if (static_cast<int>(action.type) & static_cast<int>(Action::Type::RealTime))
+	if (action.GetType() & Action::Type::RealTime)
 		realTimeEvents.emplace_back(key, callback);
 	else
 		notRealTimeEvents.emplace_back(key, callback);
