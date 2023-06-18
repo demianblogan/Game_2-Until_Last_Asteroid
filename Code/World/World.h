@@ -14,20 +14,20 @@ public:
 
 	void Update(float deltaTime);
 
-	void Add(Entity* entity);
+	void Add(std::unique_ptr<Entity> entity);
 	void Add(Configuration::Sound soundId);
 
 	void Clear();
 	bool IsEntityCollideWithOthers(const Entity& other) const;
 
 	int GetExistingEntitiesCount() const;
-	const std::list<Entity*> GetEntities() const;
+	const std::list<std::unique_ptr<Entity>>& GetEntities() const;
 	int GetWidth() const;
 	int GetHeight() const;
 
 private:
-	std::list<Entity*> entities;
-	std::list<Entity*> temporaryEntities; // entities that are added in one update frame
+	std::list<std::unique_ptr<Entity>> entities;
+	std::list<std::unique_ptr<Entity>> temporaryEntities; // entities that are added in one update frame
 	std::list<std::unique_ptr<sf::Sound>> sounds;
 
 	const unsigned int width;

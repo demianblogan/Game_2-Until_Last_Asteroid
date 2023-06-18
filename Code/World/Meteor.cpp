@@ -63,9 +63,9 @@ void MediumMeteor::OnDestroy()
 	int smallMeteorsCount = Random::GenerateInt(2, 3);
 	for (int i = 0; i < smallMeteorsCount; i++)
 	{
-		SmallMeteor* meteor = new SmallMeteor(world);
+		auto meteor = std::make_unique<SmallMeteor>(world);
 		meteor->SetPosition(GetPosition());
-		world.Add(meteor);
+		world.Add(std::move(meteor));
 	}
 	world.Add(Configuration::Sound::MediumMeteorExplosion);
 }
@@ -90,9 +90,9 @@ void BigMeteor::OnDestroy()
 	int mediumMeteorsCount = Random::GenerateInt(2, 3);
 	for (int i = 0; i < mediumMeteorsCount; i++)
 	{
-		MediumMeteor* meteor = new MediumMeteor(world);
+		auto meteor = std::make_unique<MediumMeteor>(world);
 		meteor->SetPosition(GetPosition());
-		world.Add(meteor);
+		world.Add(std::move(meteor));
 	}
 	world.Add(Configuration::Sound::BigMeteorExplosion);
 }

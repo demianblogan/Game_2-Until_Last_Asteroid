@@ -50,7 +50,7 @@ void Player::Shoot()
 {
 	if (timeSinceLastShoot > 0.2f)
 	{
-		world.Add(new PlayerShot(*this));
+		world.Add(std::make_unique<PlayerShot>(*this));
 		timeSinceLastShoot = 0;
 	}
 }

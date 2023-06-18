@@ -39,7 +39,7 @@ void Game::Update(float deltaTime)
 		{
 			Configuration::player = new Player(world);
 			Configuration::player->SetPosition(world.GetWidth() / 2, world.GetHeight() / 2);
-			world.Add(Configuration::player);
+			world.Add(std::unique_ptr<Player>(Configuration::player));
 		}
 
 		timeUntilNextEnemySaucerAppears -= deltaTime;
@@ -113,7 +113,7 @@ void Game::InitializeLevel()
 	// Place all meteors of the world, with them not colliding with each other:
 	for (int i = 0; i < bigMeteorsCount; i++)
 	{
-		Meteor* meteorPtr = new BigMeteor(world);
+		auto meteorPtr = std::make_unique<BigMeteor>(world);
 
 		do
 		{
@@ -124,7 +124,7 @@ void Game::InitializeLevel()
 
 		} while (world.IsEntityCollideWithOthers(*meteorPtr));
 
-		world.Add(meteorPtr);
+		world.Add(std::move(meteorPtr));
 	}
 }
 

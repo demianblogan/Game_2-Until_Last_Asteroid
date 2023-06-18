@@ -16,7 +16,7 @@ void World::Update(float deltaTime)
 	if (temporaryEntities.size() > 0)
 		entities.splice(entities.end(), temporaryEntities);
 
-	for (Entity* entityPtr : entities)
+	for (auto& entityPtr : entities)
 	{
 		Entity& entity = *entityPtr;
 		entity.Update(deltaTime);
@@ -35,9 +35,9 @@ void World::Update(float deltaTime)
 	);
 }
 
-void World::Add(Entity* entity)
+void World::Add(std::unique_ptr<Entity> entity)
 {
-	temporaryEntities.push_back(entity);
+	temporaryEntities.push_back(std::move(entity));
 }
 
 void World::Add(Configuration::Sound soundId)
@@ -51,20 +51,14 @@ void World::Add(Configuration::Sound soundId)
 
 void World::Clear()
 {
-	for (Entity* entity : entities)
-		delete entity;
 	entities.clear();
-
-	for (Entity* entity : temporaryEntities)
-		delete entity;
 	temporaryEntities.clear();
-
 	sounds.clear();
 }
 
 bool World::IsEntityCollideWithOthers(const Entity& entity) const
 {
-	for (Entity* entityPtr : entities)
+	for (const auto& entityPtr : entities)
 		if (entity.IsCollideWith(*entityPtr))
 			return true;
 
@@ -73,10 +67,10 @@ bool World::IsEntityCollideWithOthers(const Entity& entity) const
 
 int World::GetExistingEntitiesCount() const
 {
-	return static_cast<int>(entities.size() + temporaryEntities.size());
+	return int(entities.size() + temporaryEntities.size());
 }
 
-const std::list<Entity*> World::GetEntities() const
+const std::list<std::unique_ptr<Entity>>& World::GetEntities() const
 {
 	return entities;
 }
@@ -136,7 +130,7 @@ void World::EraseAllDeadEntities()
 	{
 		if (!(*entityIterator)->IsAlive())
 		{
-			delete* entityIterator;
+			entityIterator->reset();
 			entityIterator = entities.erase(entityIterator);
 		}
 		else
@@ -148,6 +142,6 @@ void World::EraseAllDeadEntities()
 
 void World::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	for (Entity* entity : entities)
+	for (const auto& entity : entities)
 		target.draw(*entity, states);
 }

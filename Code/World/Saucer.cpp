@@ -47,11 +47,11 @@ void Saucer::OnDestroy()
 
 void Saucer::CreateNewSaucer(World& world)
 {
-	Saucer* newSoucer = nullptr;
+	std::unique_ptr<Saucer> newSoucer;
 	if (Random::GenerateFloat(0.0f, 1.0f) > Configuration::GetScore() / 40'000.0f)
-		newSoucer = new SaucerKamikaze(world);
+		newSoucer = std::make_unique<SaucerKamikaze>(world);
 	else
-		newSoucer = new SaucerShooter(world);
+		newSoucer = std::make_unique<SaucerShooter>(world);
 
 	// New saucer will appear on the top.
 	newSoucer->SetPosition(
@@ -59,7 +59,7 @@ void Saucer::CreateNewSaucer(World& world)
 		Random::GenerateInt(0, world.GetHeight())
 	);
 
-	world.Add(newSoucer);
+	world.Add(std::move(newSoucer));
 }
 
 #pragma endregion
@@ -92,7 +92,7 @@ void SaucerShooter::Update(float deltaTime)
 	if (timeSinceLastShoot > 1.5f)
 	{
 		if (Configuration::player != nullptr)
-			world.Add(new SaucerShot(*this));
+			world.Add(std::make_unique<SaucerShot>(*this));
 
 		timeSinceLastShoot = 0;
 	}
