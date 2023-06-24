@@ -2,7 +2,7 @@
 [![ru](https://img.shields.io/badge/Language-Russian-blue.svg)](https://github.com/demianblogan/Game-Until_Last_Asteroid/blob/main/README.ru.md)
 [![ua](https://img.shields.io/badge/Language-Ukrainian-green.svg)](https://github.com/demianblogan/Game-Until_Last_Asteroid/blob/main/README.ua.md)
 
-# Brief description of the game
+# Overview
 This is my first game for my portfolio. Its genre is "Shoot 'Em Up". In this game, you control a spaceship and shoot at enemies, including asteroids and other ships. You have multiple lives, earn points, and complete levels.
 
 ![1](https://github.com/demianblogan/Game-Until_Last_Asteroid/assets/105989117/3b0eb5bc-6564-49be-a4cb-a588289da779)
